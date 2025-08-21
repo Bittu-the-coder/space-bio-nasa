@@ -1,0 +1,73 @@
+{
+  "theme": {
+    "colors": {
+      "primary": "#0B3D91",
+      "secondary": "#FC3D21",
+      "accent": "#FFD700",
+      "background": "#0A0A0A",
+      "surface": "#111111",
+      "textPrimary": "#FFFFFF",
+      "textSecondary": "#A9A9A9",
+      "border": "#2A2A2A",
+      "highlight": "#1E90FF",
+      "success": "#28A745",
+      "warning": "#FFC107",
+      "error": "#FF4136"
+    },
+    "fonts": {
+      "heading": "Orbitron, sans-serif",
+      "body": "Roboto, sans-serif",
+      "mono": "Space Mono, monospace"
+    },
+    "spacing": {
+      "xs": "4px",
+      "sm": "8px",
+      "md": "16px",
+      "lg": "24px",
+      "xl": "32px"
+    },
+    "radius": {
+      "sm": "6px",
+      "md": "12px",
+      "lg": "20px",
+      "xl": "32px"
+    },
+    "shadows": {
+      "card": "0px 4px 12px rgba(0,0,0,0.25)",
+      "button": "0px 2px 8px rgba(0,0,0,0.2)"
+    },
+    "animations": {
+      "fadeIn": "fade-in 0.3s ease-in-out",
+      "slideUp": "slide-up 0.4s ease-out",
+      "hoverScale": "transform 0.2s ease-in-out"
+    }
+  },
+  "components": {
+    "button": {
+      "background": "{colors.primary}",
+      "textColor": "{colors.textPrimary}",
+      "hover": "{colors.secondary}",
+      "borderRadius": "{radius.lg}",
+      "shadow": "{shadows.button}"
+    },
+    "card": {
+      "background": "{colors.surface}",
+      "textColor": "{colors.textPrimary}",
+      "borderRadius": "{radius.xl}",
+      "shadow": "{shadows.card}",
+      "padding": "{spacing.lg}"
+    },
+    "navbar": {
+      "background": "{colors.background}",
+      "textColor": "{colors.textPrimary}",
+      "hover": "{colors.highlight}",
+      "height": "64px"
+    },
+    "graph": {
+      "nodeColor": "{colors.accent}",
+      "edgeColor": "{colors.textSecondary}",
+      "highlightColor": "{colors.secondary}",
+      "background": "{colors.background}"
+    }
+  }
+}
