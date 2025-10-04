@@ -1,4 +1,6 @@
 import axios from 'axios'
+import geminiService from './geminiService'
+import pdfService from './pdfService'
 
 const BASE_URL = '/api'
 
@@ -9,6 +11,28 @@ const api = axios.create({
     'Content-Type': 'application/json',
   },
 })
+
+// Initialize services with error handling
+const initializeServices = async () => {
+  try {
+    // Initialize PDF service first (more reliable)
+    await pdfService.initialize()
+    console.log('PDF service initialized successfully')
+    
+    // Initialize Gemini service (may fail due to API issues)
+    const aiInitialized = await geminiService.initialize()
+    if (aiInitialized) {
+      console.log('Gemini AI service initialized successfully')
+    } else {
+      console.warn('Gemini AI service initialization failed - continuing with limited functionality')
+    }
+  } catch (error) {
+    console.error('Error initializing services:', error)
+  }
+}
+
+// Auto-initialize services
+initializeServices()
 
 // Mock data for demo purposes
 const mockPublications = [
@@ -116,6 +140,31 @@ export const searchAPI = {
 
     let results = [...mockPublications]
 
+    // Also search PDF content if available
+    try {
+      const pdfResults = await pdfService.searchPDFs(query)
+      // Convert PDF results to match our publication format
+      const convertedPdfResults = pdfResults.map(pdf => ({
+        id: pdf.id,
+        title: pdf.title,
+        authors: ['NASA Research Team'],
+        year: 2024,
+        mission: 'Various NASA Missions',
+        organism: 'Multiple Species',
+        experimentType: 'Space Biology Research',
+        abstract: pdf.content.substring(0, 300) + '...',
+        keywords: pdf.keywords,
+        connections: pdf.keywords.slice(0, 3),
+        summary: {
+          plain: pdf.excerpt,
+          technical: pdf.content.substring(0, 200) + '...'
+        }
+      }))
+      results = [...results, ...convertedPdfResults]
+    } catch (error) {
+      console.warn('PDF search failed:', error)
+    }
+
     // Apply text search
     if (query) {
       results = results.filter(pub =>
@@ -149,6 +198,31 @@ export const searchAPI = {
     }
 
     return results
+  },
+
+  askAI: async (question, context = '') => {
+    try {
+      return await geminiService.askQuestion(question, context)
+    } catch (error) {
+      throw new Error('AI service unavailable. Please try again later.')
+    }
+  },
+
+  generateSummary: async (text, type = 'technical') => {
+    try {
+      return await geminiService.generateSummary(text, type)
+    } catch (error) {
+      throw new Error('Summary generation failed. Please try again.')
+    }
+  },
+
+  searchPDFs: async (query) => {
+    try {
+      return await pdfService.searchPDFs(query)
+    } catch (error) {
+      console.error('PDF search error:', error)
+      return []
+    }
   },
 
   getGraph: async (filters = {}) => {

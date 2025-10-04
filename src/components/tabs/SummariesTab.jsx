@@ -62,7 +62,7 @@ const SummariesTab = ({ filters }) => {
 
     return (
       <motion.div
-        className={`bg-surface rounded-lg p-4 border cursor-pointer transition-all duration-200 hover-scale ${
+        className={`bg-surface rounded-lg p-3 sm:p-4 border cursor-pointer transition-all duration-200 hover-scale ${
           isSelected
             ? "border-highlight shadow-lg"
             : "border-border hover:border-text-secondary"
@@ -77,23 +77,23 @@ const SummariesTab = ({ filters }) => {
               isSelected ? "bg-highlight" : "bg-background"
             }`}
           >
-            <Icon className="w-5 h-5 text-white" />
+            <Icon className="w-4 h-4 sm:w-5 sm:h-5 text-white" />
           </div>
-          <div className="flex-1">
-            <h3 className="font-heading text-lg font-semibold text-text-primary mb-2 line-clamp-2">
+          <div className="flex-1 min-w-0">
+            <h3 className="font-heading text-base sm:text-lg font-semibold text-text-primary mb-2 line-clamp-2">
               {publication.title}
             </h3>
-            <div className="space-y-1 text-sm text-text-secondary mb-3">
-              <div className="flex items-center space-x-4">
+            <div className="space-y-1 text-xs sm:text-sm text-text-secondary mb-3">
+              <div className="flex items-center space-x-2 sm:space-x-4">
                 <span className="flex items-center space-x-1">
-                  <Calendar className="w-4 h-4" />
+                  <Calendar className="w-3 h-3 sm:w-4 sm:h-4" />
                   <span>{publication.year}</span>
                 </span>
-                <span className="text-accent">{publication.mission}</span>
+                <span className="text-accent truncate">{publication.mission}</span>
               </div>
-              <p className="text-text-secondary">{publication.organism}</p>
+              <p className="text-text-secondary truncate">{publication.organism}</p>
             </div>
-            <p className="text-text-secondary text-sm line-clamp-3">
+            <p className="text-text-secondary text-xs sm:text-sm line-clamp-2 sm:line-clamp-3">
               {publication.abstract}
             </p>
             <div className="mt-3 flex flex-wrap gap-1">
@@ -118,23 +118,21 @@ const SummariesTab = ({ filters }) => {
     );
   };
 
-  return (
-    <div className="h-full flex">
+    return (
+    <div className="h-full flex flex-col lg:flex-row">
       {/* Publications List */}
-      <div className="w-1/2 border-r border-border overflow-y-auto">
-        <div className="p-6">
-          <div className="flex items-center justify-between mb-6">
+      <div className="w-full lg:w-1/2 border-b lg:border-b-0 lg:border-r border-border overflow-y-auto">
+        <div className="p-4 sm:p-6">
+          <div className="flex items-center justify-between mb-4 sm:mb-6">
             <div>
-              <h2 className="font-heading text-2xl font-bold text-text-primary">
+              <h2 className="font-heading text-lg sm:text-2xl font-bold text-text-primary">
                 Research Publications
               </h2>
-              <p className="text-text-secondary">
+              <p className="text-text-secondary text-sm sm:text-base">
                 {publications.length} publications found
               </p>
             </div>
-          </div>
-
-          {loading ? (
+          </div>          {loading ? (
             <div className="flex items-center justify-center py-12">
               <div className="text-center">
                 <div className="w-8 h-8 border-2 border-highlight border-t-transparent rounded-full animate-spin mx-auto mb-2"></div>
@@ -159,31 +157,31 @@ const SummariesTab = ({ filters }) => {
       {/* Publication Details and Summaries */}
       <div className="flex-1 overflow-y-auto">
         {selectedPublication ? (
-          <div className="p-6">
-            <div className="mb-6">
-              <h2 className="font-heading text-2xl font-bold text-text-primary mb-2">
+          <div className="p-4 sm:p-6">
+            <div className="mb-4 sm:mb-6">
+              <h2 className="font-heading text-lg sm:text-2xl font-bold text-text-primary mb-2">
                 {selectedPublication.title}
               </h2>
-              <div className="flex items-center space-x-4 text-text-secondary text-sm mb-4">
+              <div className="flex flex-wrap items-center gap-2 text-text-secondary text-xs sm:text-sm mb-4">
                 <span>{selectedPublication.year}</span>
                 <span>•</span>
-                <span>{selectedPublication.mission}</span>
+                <span className="break-all">{selectedPublication.mission}</span>
                 <span>•</span>
                 <span>{selectedPublication.experimentType}</span>
               </div>
-              <p className="text-text-secondary mb-4">
+              <p className="text-text-secondary mb-4 text-sm sm:text-base">
                 <strong>Authors:</strong>{" "}
                 {selectedPublication.authors.join(", ")}
               </p>
-              <p className="text-text-secondary">
+              <p className="text-text-secondary text-sm sm:text-base">
                 <strong>Organism:</strong> {selectedPublication.organism}
               </p>
             </div>
 
             {/* Action Buttons */}
-            <div className="flex space-x-3 mb-6">
+            <div className="flex flex-col sm:flex-row space-y-2 sm:space-y-0 sm:space-x-3 mb-4 sm:mb-6">
               <motion.button
-                className="bg-primary hover:bg-opacity-80 text-white px-4 py-2 rounded-lg flex items-center space-x-2 transition-all duration-200"
+                className="bg-primary hover:bg-opacity-80 text-white px-3 sm:px-4 py-2 rounded-lg flex items-center justify-center space-x-2 transition-all duration-200 text-sm sm:text-base"
                 whileHover={{ scale: 1.02 }}
                 whileTap={{ scale: 0.98 }}
               >
@@ -191,7 +189,7 @@ const SummariesTab = ({ filters }) => {
                 <span>View Full Paper</span>
               </motion.button>
               <motion.button
-                className="bg-secondary hover:bg-opacity-80 text-white px-4 py-2 rounded-lg flex items-center space-x-2 transition-all duration-200"
+                className="bg-secondary hover:bg-opacity-80 text-white px-3 sm:px-4 py-2 rounded-lg flex items-center justify-center space-x-2 transition-all duration-200 text-sm sm:text-base"
                 whileHover={{ scale: 1.02 }}
                 whileTap={{ scale: 0.98 }}
               >

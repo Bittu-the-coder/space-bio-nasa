@@ -1,9 +1,10 @@
 import React, { useState } from "react";
 import { motion, AnimatePresence } from "framer-motion";
-import { Network, CalendarClock, FileText } from "lucide-react";
+import { Network, FileText, MessageSquare, BookOpen } from "lucide-react";
 import KnowledgeGraphTab from "./tabs/KnowledgeGraphTab";
-import TimelineTab from "./tabs/TimelineTab";
 import SummariesTab from "./tabs/SummariesTab";
+import AskTab from "./tabs/AskTab";
+import PDFLibraryTab from "./tabs/PDFLibraryTab";
 
 const Dashboard = ({ filters }) => {
   const [activeTab, setActiveTab] = useState("graph");
@@ -16,16 +17,22 @@ const Dashboard = ({ filters }) => {
       component: KnowledgeGraphTab,
     },
     {
-      id: "timeline",
-      name: "Timeline",
-      icon: CalendarClock,
-      component: TimelineTab,
+      id: "library",
+      name: "PDF Library",
+      icon: BookOpen,
+      component: PDFLibraryTab,
     },
     {
       id: "summaries",
       name: "Summaries",
       icon: FileText,
       component: SummariesTab,
+    },
+    {
+      id: "ask",
+      name: "Ask AI",
+      icon: MessageSquare,
+      component: AskTab,
     },
   ];
 
@@ -34,10 +41,10 @@ const Dashboard = ({ filters }) => {
   )?.component;
 
   return (
-    <div className="h-[calc(100vh-8rem)]">
+    <div className="h-[calc(100vh-6rem)] sm:h-[calc(100vh-8rem)]">
       {/* Tab Navigation */}
       <motion.div
-        className="flex space-x-1 mb-6 bg-surface rounded-lg p-1"
+        className="flex flex-wrap sm:flex-nowrap space-x-1 mb-4 sm:mb-6 bg-surface rounded-lg p-1 overflow-x-auto"
         initial={{ opacity: 0, y: -20 }}
         animate={{ opacity: 1, y: 0 }}
         transition={{ duration: 0.3 }}
@@ -48,7 +55,7 @@ const Dashboard = ({ filters }) => {
             <motion.button
               key={tab.id}
               onClick={() => setActiveTab(tab.id)}
-              className={`relative flex items-center space-x-2 px-6 py-3 rounded-md font-medium transition-all duration-200 ${
+              className={`relative flex items-center space-x-1 sm:space-x-2 px-3 sm:px-6 py-2 sm:py-3 rounded-md font-medium transition-all duration-200 whitespace-nowrap text-sm sm:text-base ${
                 isActive
                   ? "text-white"
                   : "text-text-secondary hover:text-text-primary"
@@ -63,15 +70,16 @@ const Dashboard = ({ filters }) => {
                   transition={{ type: "spring", bounce: 0.2, duration: 0.6 }}
                 />
               )}
-              <tab.icon className="w-5 h-5 relative z-10" />
-              <span className="relative z-10 font-heading">{tab.name}</span>
+              <tab.icon className="w-4 h-4 sm:w-5 sm:h-5 relative z-10" />
+              <span className="relative z-10 font-heading hidden sm:inline">{tab.name}</span>
+              <span className="relative z-10 font-heading sm:hidden">{tab.name.split(' ')[0]}</span>
             </motion.button>
           );
         })}
       </motion.div>
 
       {/* Tab Content */}
-      <div className="h-[calc(100%-5rem)] bg-surface rounded-xl shadow-card overflow-hidden">
+      <div className="h-[calc(100%-4rem)] sm:h-[calc(100%-5rem)] bg-surface rounded-xl shadow-card overflow-hidden">
         <AnimatePresence mode="wait">
           <motion.div
             key={activeTab}

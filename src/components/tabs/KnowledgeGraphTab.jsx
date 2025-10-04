@@ -150,13 +150,13 @@ const KnowledgeGraphTab = ({ filters }) => {
   };
 
   return (
-    <div className="h-full flex">
-      <div className="flex-1 relative">
+    <div className="h-full flex flex-col lg:flex-row">
+      <div className="flex-1 relative min-h-[400px] lg:min-h-full">
         {loading && (
           <div className="absolute inset-0 flex items-center justify-center bg-background bg-opacity-50 z-10">
             <div className="text-center">
-              <div className="w-8 h-8 border-2 border-highlight border-t-transparent rounded-full animate-spin mx-auto mb-2"></div>
-              <p className="text-text-secondary">Loading knowledge graph...</p>
+              <div className="w-6 h-6 sm:w-8 sm:h-8 border-2 border-highlight border-t-transparent rounded-full animate-spin mx-auto mb-2"></div>
+              <p className="text-text-secondary text-sm sm:text-base">Loading knowledge graph...</p>
             </div>
           </div>
         )}
@@ -164,25 +164,25 @@ const KnowledgeGraphTab = ({ filters }) => {
         <canvas ref={canvasRef} className="w-full h-full cursor-pointer" />
 
         {/* Graph Legend */}
-        <div className="absolute top-4 left-4 bg-background bg-opacity-80 backdrop-blur-sm rounded-lg p-4 border border-border">
-          <h3 className="font-heading text-sm font-medium text-text-primary mb-3">
+        <div className="absolute top-2 sm:top-4 left-2 sm:left-4 bg-background bg-opacity-80 backdrop-blur-sm rounded-lg p-3 sm:p-4 border border-border">
+          <h3 className="font-heading text-xs sm:text-sm font-medium text-text-primary mb-2 sm:mb-3">
             Node Types
           </h3>
-          <div className="space-y-2 text-xs">
+          <div className="space-y-1 sm:space-y-2 text-xs">
             <div className="flex items-center space-x-2">
-              <div className="w-3 h-3 rounded-full bg-yellow-400"></div>
+              <div className="w-2 h-2 sm:w-3 sm:h-3 rounded-full bg-yellow-400"></div>
               <span className="text-text-secondary">Organisms</span>
             </div>
             <div className="flex items-center space-x-2">
-              <div className="w-3 h-3 rounded-full bg-blue-400"></div>
+              <div className="w-2 h-2 sm:w-3 sm:h-3 rounded-full bg-blue-400"></div>
               <span className="text-text-secondary">Experiments</span>
             </div>
             <div className="flex items-center space-x-2">
-              <div className="w-3 h-3 rounded-full bg-red-400"></div>
+              <div className="w-2 h-2 sm:w-3 sm:h-3 rounded-full bg-red-400"></div>
               <span className="text-text-secondary">Missions</span>
             </div>
             <div className="flex items-center space-x-2">
-              <div className="w-3 h-3 rounded-full bg-green-400"></div>
+              <div className="w-2 h-2 sm:w-3 sm:h-3 rounded-full bg-green-400"></div>
               <span className="text-text-secondary">Results</span>
             </div>
           </div>
@@ -192,10 +192,10 @@ const KnowledgeGraphTab = ({ filters }) => {
       {/* Node Details Panel */}
       {selectedNode && (
         <motion.div
-          initial={{ x: 300, opacity: 0 }}
-          animate={{ x: 0, opacity: 1 }}
-          exit={{ x: 300, opacity: 0 }}
-          className="w-80 bg-background border-l border-border p-6 overflow-y-auto"
+          initial={{ y: 300, opacity: 0 }}
+          animate={{ y: 0, opacity: 1 }}
+          exit={{ y: 300, opacity: 0 }}
+          className="w-full lg:w-80 bg-background border-t lg:border-t-0 lg:border-l border-border p-4 sm:p-6 overflow-y-auto max-h-64 lg:max-h-full"
         >
           <div className="flex items-center justify-between mb-4">
             <h3 className="font-heading text-lg font-semibold text-text-primary">

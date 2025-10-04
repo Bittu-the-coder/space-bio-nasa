@@ -2,7 +2,7 @@ import React from "react";
 import { motion } from "framer-motion";
 import { Filter, Calendar, Microscope, Rocket, Users } from "lucide-react";
 
-const Sidebar = ({ filters, setFilters }) => {
+const Sidebar = ({ filters, setFilters, sidebarOpen, setSidebarOpen }) => {
   const filterOptions = {
     organism: [
       "Arabidopsis thaliana",
@@ -61,7 +61,13 @@ const Sidebar = ({ filters, setFilters }) => {
         {options.map((option) => (
           <motion.button
             key={option}
-            onClick={() => handleFilterChange(filterType, option)}
+            onClick={() => {
+              handleFilterChange(filterType, option);
+              // Close sidebar on mobile after selection
+              if (window.innerWidth < 1024) {
+                setSidebarOpen(false);
+              }
+            }}
             className={`w-full text-left px-3 py-2 rounded-md text-sm transition-all duration-200 ${
               filters[filterType] === option
                 ? "bg-highlight text-white"
@@ -78,9 +84,11 @@ const Sidebar = ({ filters, setFilters }) => {
 
   return (
     <motion.aside
-      className="fixed left-0 top-16 h-[calc(100vh-4rem)] w-80 bg-surface border-r border-border p-6 overflow-y-auto"
+      className={`fixed left-0 top-16 h-[calc(100vh-4rem)] w-80 bg-surface border-r border-border p-4 sm:p-6 overflow-y-auto z-50 lg:z-auto transition-transform duration-300 ${
+        sidebarOpen ? 'translate-x-0' : '-translate-x-full lg:translate-x-0'
+      }`}
       initial={{ x: -320 }}
-      animate={{ x: 0 }}
+      animate={{ x: sidebarOpen || window.innerWidth >= 1024 ? 0 : -320 }}
       transition={{ duration: 0.3 }}
     >
       <div className="flex items-center justify-between mb-6">
